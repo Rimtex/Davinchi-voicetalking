@@ -389,7 +389,7 @@ if __name__ == '__main__':
                 elif prompt == '"компьютер сон"' or prompt == '"компьютер спать"' or prompt == '"компьютер засни"':
                     os.system('shutdown /h')  # сон
 
-                # управление голосом:
+                # управление:
                 elif prompt == '"альт"' or prompt == '"аль"':
                     keyboard.press("Altleft")
                 elif prompt == '"пробел"':
