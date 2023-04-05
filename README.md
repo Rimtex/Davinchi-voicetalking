@@ -1,15 +1,15 @@
 # Davinchi-voicetalking
 
-pip install colorama
-pip install keyboard
-pip install pyautogui
-pip install openai 
-pip install pyaudio 
-pip install vosk 
-pip install pyttsx3
-pip install requests
-pip install quote
-pip install googletrans 
+pip install colorama  
+pip install keyboard  
+pip install pyautogui  
+pip install openai   
+pip install pyaudio   
+pip install vosk   
+pip install pyttsx3  
+pip install requests  
+pip install quote  
+pip install googletrans   
 
 импорт библиотек
 win + R > cmd > enter > ctrl + v 
