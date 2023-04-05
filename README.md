@@ -60,7 +60,7 @@ pip install --upgrade googletrans==4.0.0-rc1
 
 все команды в файле - команды.txt   
 
-видео будет чуть позже  
+https://www.youtube.com/watch?v=NeodPCxl3xs&t=1s&ab_channel=RimtexSE  
 
 Данный код по сути модифицированная версия этого проекта - https://github.com/beetlea/SayChatGPT  
 откуда я нагло позаимствовал и или украл код и доработал/переделал с помощью нейросетей  
