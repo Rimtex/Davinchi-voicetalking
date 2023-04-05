@@ -21,7 +21,7 @@ speak = wincl.Dispatch("SAPI.SpVoice")
 voices = speak.GetVoices()
 
 # https://platform.openai.com/account/api-keys
-openai.api_key = "token"  # обязательно вставьте свой ключ !!!
+openai.api_key = "token"  # обязательно вставьте свой токен !!!
 
 model = Model(r"vosk-model-small-ru-0.22")  # будет ошибка если запускать из консоли. !!
 # для работы из консоли нужен полный путь к модели - как ниже:
