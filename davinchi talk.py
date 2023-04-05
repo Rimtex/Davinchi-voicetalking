@@ -25,7 +25,7 @@ openai.api_key = "token"  # обязательно вставьте свой к�
 
 model = Model(r"vosk-model-small-ru-0.22")  # будет ошибка если запускать из консоли. !!
 # для работы из консоли нужен полный путь к модели - как ниже:
-# model = Model(r"F:\myprojects\Davinchi voicetalking\vosk-model-small-ru-0.22")
+# model = Model(r"F:\myprojects\Davinchi-voicetalking-main\vosk-model-small-ru-0.22")
 
 adresopenfiles = 'C:\\Users\\Public\\Desktop\\'  # адрес папки для команд открытия !   C:\\Users\\Usersname\\Desktop\\
 
