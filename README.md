@@ -9,7 +9,8 @@
 
 скачать языковую модель для распознавания русской речи https://alphacephei.com/vosk/models 
 
-[vosk-model-ru-0.42](https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip)
+https://alphacephei.com/vosk/models/vosk-model-ru-0.42.zip
+https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip
 
 Обязательно нужно получить token для работы с API - https://platform.openai.com/account/api-keys
 
