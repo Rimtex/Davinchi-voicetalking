@@ -9,10 +9,10 @@ https://www.python.org/
 
 Скачать языковую модель для распознавания русской речи, закинуть папку туда же где программа.  
 
-https://alphacephei.com/vosk/models/vosk-model-ru-0.42.zip            
+https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip          
 легкая версия для команд вполне годится 
 
-https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip     
+https://alphacephei.com/vosk/models/vosk-model-ru-0.42.zip   
 тяжелая распознает заметно лучше, но грузится у меня например почти 4 минуты  
 если используете тяжёлую версию нужно будет поменять адрес на (26 строчке)  
 
