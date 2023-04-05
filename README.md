@@ -47,15 +47,15 @@ pip install googletrans
 win + R > cmd > enter > ctrl + v    
 если вставить все сразу - у вас должно установиться все по порядку, наверное.   
 
+мне еще пришлось установить   
+pip install --upgrade googletrans==4.0.0-rc1  
+
 для голоса Microsoft Pavel Mobile нужно запустить файлы реестра в папке -  
 need install for pavel voice и поменять его на (33 строчке)  
   
 возможно для голоса нужно будет установить  
 pip install Microsoft Pavel Mobile  
-  
-мне еще пришлось установить   
-pip install --upgrade googletrans==4.0.0-rc1  
-  
+   
 <h2>Принцип работы</h3> 
 
 все команды в файле - команды.txt   
