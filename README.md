@@ -28,6 +28,8 @@ https://platform.openai.com/account/api-keys
 
 `engine='text-davinci-003'`   Менять тип используемой модели для одиночного запроса можно на (10 строчке) 
 
+роли для gpt-3.5-turbo можно менять на (14, 15 строке)
+
 номер телефона для OpenAI я брал сдесь - https://onlinesim.io/ru
 
 <h2>Необходимые зависимости</h2> 
