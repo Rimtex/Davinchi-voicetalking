@@ -45,7 +45,7 @@ need install for pavel voice и поменять его на (33 строчке)
    
 <h2>Принцип работы</h3> 
 
-все команды в файле - команды.txt   
+все команды в файле - `команды.txt`
 
 https://www.youtube.com/watch?v=NeodPCxl3xs&t=1s&ab_channel=RimtexSE  
 
