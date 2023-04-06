@@ -22,7 +22,7 @@
 
 `https://platform.openai.com/account/api-keys` 
 
-токен надо записать в переменные openai.api_key 
+токен надо записать в переменные `openai.api_key`
 
 openai.api_key = "token"</br>    (24 строчка в файле davinchi talk.py) 
 
