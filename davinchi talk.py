@@ -42,6 +42,10 @@ speak.Volume = 100  # громкость озвучки
 
 engine = 'text-davinci-003'  # https://platform.openai.com/docs/models/gpt-4
 
+# models = openai.Model.list()
+# for model in models.data: 
+    # print(model.id) # можно вевести список моделей
+
 rec = KaldiRecognizer(model, 44100)  # частота дискретизации должна быть такой же, как и в системе
 p = pyaudio.PyAudio()
 stream = p.open(
