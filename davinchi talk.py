@@ -71,8 +71,25 @@ def generate_gpt3_response(prompt_gpt):
     # Возврат ответа, если количество вариантов больше нуля.
 
 
-# низкая температура, вероятно, выдаст наиболее правильный текст, но довольно скучный, с небольшой вариацией.
-# высокая, Сгенерированный текст будет более разнообразным, но выше вероятность грамматических ошибок и генерации бреда.
+def send_message(message_log):
+    # Отправляем сообщения в OpenAI API и получаем ответ
+    responseturbo = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=message_log,  # журнал сообщений, содержащий сообщения от пользователя и ответы ассистента
+        max_tokens=3000,  # максимальное количество токенов в ответе
+        stop=None,  # последовательность, которая остановит генерацию ответа
+        temperature=0.7,  # параметр, определяющий "творческий" уровень генерации ответов
+    )
+
+    # Перебираем все варианты ответов из объекта response
+    for choice in responseturbo.choices:
+        # Если в текущем варианте есть поле "text"
+        if "text" in choice:
+            # Возвращаем текст этого варианта
+            return choice.text
+
+    # Если ни один вариант не содержит поля "text", то возвращаем текст первого сообщения
+    return responseturbo.choices[0].message.content
 
 
 colors = [Fore.RED, Fore.GREEN, Fore.BLUE, Fore.YELLOW, Fore.MAGENTA, Fore.CYAN,
@@ -179,6 +196,7 @@ if __name__ == '__main__':
                     print('\nразговор начат!')
                     speak.Speak("разговор начат!")
                     tts.runAndWait()
+                    message_log = []
                     while True:
                         data = stream.read(4000)
                         if rec.AcceptWaveform(data):
@@ -195,13 +213,16 @@ if __name__ == '__main__':
                                 print(Fore.LIGHTYELLOW_EX + prompt + Style.RESET_ALL)
                                 trans = translator.translate(prompt, dest="en")
                                 print(Fore.YELLOW + trans.text + Style.RESET_ALL)
-                                response = generate_gpt3_response(trans.text)
-                                print(Fore.GREEN + response[2:])
+                                user_input = trans.text
+                                message_log.append({"role": "user", "content": user_input})
+                                response = send_message(message_log)
+                                message_log.append({"role": "assistant", "content": response})
+                                print(Fore.GREEN + response[2:] + Style.RESET_ALL)
                                 trans = translator.translate(response, dest="ru")
                                 print(Fore.LIGHTGREEN_EX + trans.text + Style.RESET_ALL)
-                                if len(trans.text) <= 700:  # Проверка длины текста: 300-700 симв.
-                                    speak.rate = speakset + (speakmax - speakset) * len(trans.text) / 700
-                                elif len(trans.text) > 700:
+                                if len(response) <= 700:
+                                    speak.rate = speakset + (speakmax - speakset) * len(response) / 700
+                                elif len(response) > 700:
                                     speak.Rate = speakmax
                                 speak.Speak(trans.text)
                                 tts.runAndWait()
@@ -210,8 +231,9 @@ if __name__ == '__main__':
                 elif any(word in prompt for word in
                          ('"поговорим нормально"', '"нормальный разговор"', '"разговор по-русски"')):
                     print('\nразговор без перевода начат!')
-                    speak.Speak("давай поговорим без перевода!")
+                    speak.Speak("разговор начат!")
                     tts.runAndWait()
+                    message_log = []
                     while True:
                         data = stream.read(4000)
                         if rec.AcceptWaveform(data):
@@ -226,7 +248,11 @@ if __name__ == '__main__':
                                 break
                             elif prompt != '' and len(prompt) > 7:
                                 print(Fore.LIGHTYELLOW_EX + prompt + Style.RESET_ALL)
-                                response = generate_gpt3_response(prompt)
+
+                                user_input = prompt
+                                message_log.append({"role": "user", "content": user_input})
+                                response = send_message(message_log)
+                                message_log.append({"role": "assistant", "content": response})
                                 print(Fore.LIGHTGREEN_EX + response[2:] + Style.RESET_ALL)
                                 if len(response) <= 700:
                                     speak.rate = speakset + (speakmax - speakset) * len(response) / 700
@@ -380,7 +406,7 @@ if __name__ == '__main__':
                 elif any(word in prompt[1:-1]
                          for word in ('заткнись на хрен', 'громкость на ноль', 'ну ка тихо быстро заткнись',
                                       'да не ари так', 'да не ари ты так', 'заткнись быстро', 'завали хлебало')):
-                    print(f'\n{prompt[1:-1]}')
+                    print(prompt[1:-1])
                     pyautogui.press('volumemute')
 
                 # Управление компьютером:
@@ -393,7 +419,7 @@ if __name__ == '__main__':
                 elif prompt == '"компьютер сон"' or prompt == '"компьютер спать"' or prompt == '"компьютер засни"':
                     os.system('shutdown /h')  # сон
 
-                # управление:
+                # управление голосом:
                 elif prompt == '"альт"' or prompt == '"аль"':
                     keyboard.press("Altleft")
                 elif prompt == '"пробел"':
