@@ -51,11 +51,4 @@ https://platform.openai.com/account/api-keys
 
 https://www.youtube.com/watch?v=NeodPCxl3xs&t=1s&ab_channel=RimtexSE  
 
-Данный код по сути модифицированная версия этого проекта - https://github.com/beetlea/SayChatGPT   
-
-<h2>Обновления</h3> 
-
-1. теперь в разговорах используется модель gpt-3.5-turbo с запоминанием для более адекватного диалога   
-пример взял отсюда - https://github.com/kydycode/chatgpt-3.5-turbo  
-переменные вынесены в отдельный файл `settings.py` для того чтобы не вводить их заного после обновления.
-
+Данный код по сути модифицированная версия этого проекта - https://github.com/beetlea/SayChatGPT      
