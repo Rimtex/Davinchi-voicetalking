@@ -194,7 +194,8 @@ if __name__ == '__main__':
                             prompt = rec.Result()
                             prompt = prompt[14:-3]
                             if prompt == 'завершить разговор' or prompt == 'конец разговора' \
-                                    or prompt == 'обычный режим':
+                                    or prompt == 'обычный режим' or prompt == 'конец разговор' \
+                                    or prompt == 'заверши разговор':
                                 print('разговор завершен!')
                                 speak.rate = speakset
                                 speak.Speak("разговор завершен!")
@@ -231,7 +232,8 @@ if __name__ == '__main__':
                             prompt = rec.Result()
                             prompt = prompt[14:-3]
                             if prompt == 'завершить разговор' or prompt == 'конец разговора' \
-                                    or prompt == 'обычный режим':
+                                    or prompt == 'обычный режим' or prompt == 'конец разговор' \
+                                    or prompt == 'заверши разговор':
                                 print('разговор завершен!')
                                 speak.rate = speakset
                                 speak.Speak("разговор завершен!")
