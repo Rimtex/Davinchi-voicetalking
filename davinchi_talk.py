@@ -301,7 +301,7 @@ if __name__ == '__main__':
                                 response = requests.get(image_url)
                                 with open(adresopenfiles + 'cat.jpg', 'wb') as f:
                                     f.write(response.content)
-                                os.startfile(adresopenfiles  +  'cat.jpg')
+                                os.startfile(adresopenfiles + 'cat.jpg')
                                 print(Fore.LIGHTCYAN_EX + "рисунок готов!" + Style.RESET_ALL)
                                 speak.Speak("рисунок готов!")
                                 tts.runAndWait()
