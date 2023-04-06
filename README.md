@@ -33,7 +33,7 @@ https://platform.openai.com/account/api-keys
 <h2>Необходимые зависимости</h2> 
 
 Установите необходимые пакеты: `pip install -r requirements.txt`
-    
+
 мне еще пришлось установить   
 `pip install --upgrade googletrans==4.0.0-rc1`  
 
