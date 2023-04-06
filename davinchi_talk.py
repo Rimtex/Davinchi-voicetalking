@@ -36,12 +36,12 @@ speak.Volume = speakVolumeset
 engine = engineset
 discret = discretset
 
-rec = KaldiRecognizer(model, discret)  # частота дискретизации должна быть такой же, как и в системе
+rec = KaldiRecognizer(model, discret)  
 p = pyaudio.PyAudio()
 stream = p.open(
     format=pyaudio.paInt16,
     channels=1,
-    rate=discret,  # звуки > запись > микрофон > свойства > дополнительно > выставляем также тут и выше
+    rate=discret,  
     input=True,
     frames_per_buffer=4000
 )
