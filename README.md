@@ -45,6 +45,8 @@ https://platform.openai.com/account/api-keys
    
 <h2>Принцип работы</h3> 
 
+запустить `davinchi_talk.py`
+
 все команды в файле - `команды.txt`
 
 https://www.youtube.com/watch?v=NeodPCxl3xs&t=1s&ab_channel=RimtexSE  
