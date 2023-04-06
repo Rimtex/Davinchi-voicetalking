@@ -15,7 +15,7 @@ from googletrans import Translator
 from urllib.parse import quote
 
 from settings import openaiapikeyset, modelset, adresopenfilesset, \
-    Voiceset, speaksetmin, speaksetmax, speakVolumeset, engineset
+    Voiceset, speaksetmin, speaksetmax, speakVolumeset, engineset, discretset
 
 translator = Translator()
 init(convert=True)
@@ -35,13 +35,14 @@ speakset = speaksetmin
 speakmax = speaksetmax
 speak.Volume = speakVolumeset
 engine = engineset
+discret = discretset
 
-rec = KaldiRecognizer(model, 44100)  # частота дискретизации должна быть такой же, как и в системе
+rec = KaldiRecognizer(model, discret)  # частота дискретизации должна быть такой же, как и в системе
 p = pyaudio.PyAudio()
 stream = p.open(
     format=pyaudio.paInt16,
     channels=1,
-    rate=44100,  # звуки > запись > микрофон > свойства > дополнительно > выставляем также тут и выше
+    rate=discret,  # звуки > запись > микрофон > свойства > дополнительно > выставляем также тут и выше
     input=True,
     frames_per_buffer=4000
 )
