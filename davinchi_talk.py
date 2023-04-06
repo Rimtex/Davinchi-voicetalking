@@ -15,14 +15,13 @@ from googletrans import Translator
 from urllib.parse import quote
 
 from settings import openaiapikeyset, modelset, adresopenfilesset, \
-    Voiceset, speaksetmin, speaksetmax, speakVolumeset, engineset, discretset
+    Voiceset, speaksetmin, speaksetmax, speakVolumeset, engineset, discretset, roleplayrus, roleplayeng
 
 translator = Translator()
 init(convert=True)
 tts = pyttsx3.init()
 speak = wincl.Dispatch("SAPI.SpVoice")
 voices = speak.GetVoices()
-
 
 openai.api_key = openaiapikeyset
 model = Model(modelset)
@@ -67,7 +66,7 @@ def send_message(message_loggpt):
     responseturbo = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=message_loggpt,  # журнал сообщений, содержащий сообщения от пользователя и ответы ассистента
-        max_tokens=2000,  # максимальное количество токенов в ответе, чем больше, тем чаще возникает ошибка, пытаюсь выяснить как пофиксить
+        max_tokens=2000,  # максимальное количество токенов в ответе
         stop=None,  # последовательность, которая остановит генерацию ответа
         temperature=0.7,  # параметр, определяющий "творческий" уровень генерации ответов
     )
@@ -94,11 +93,11 @@ print(''
       '\n'
       ' Многоразовый вызов:\n'
       '    | начать разговор | давай поговорим | начать диалог |\n'
-      '>>> | заверши(ть) разговор | конец разговор(а) | обычный режим |\n'
+      '>>> | заверши(ть) разговор | конец разговор(а) | закончи(ть) разговор | обычный режим |\n'
       '\n'
       ' Многоразовый вызов без перевода:\n'
       '    | поговорим нормально | нормальный разговор | разговор по-русски |\n'
-      '>>> | заверши(ть) разговор | конец разговор(а) | обычный режим |\n'
+      '>>> | заверши(ть) разговор | конец разговор(а) | закончи(ть) разговор | обычный режим |\n'
       '\n'
       ' Запись в курсор:\n'
       '    | начать запись | записывать звук | запись звука | запись | запиши | включи запись | включить запись |\n'
@@ -187,7 +186,8 @@ if __name__ == '__main__':
                     print('\nразговор начат!')
                     speak.Speak("разговор начат!")
                     tts.runAndWait()
-                    message_log = []
+                    playroleeng = roleplayeng
+                    message_log = [{"role": "system", "content": playroleeng}]
                     while True:
                         data = stream.read(4000)
                         if rec.AcceptWaveform(data):
@@ -195,7 +195,8 @@ if __name__ == '__main__':
                             prompt = prompt[14:-3]
                             if prompt == 'завершить разговор' or prompt == 'конец разговора' \
                                     or prompt == 'обычный режим' or prompt == 'конец разговор' \
-                                    or prompt == 'заверши разговор':
+                                    or prompt == 'заверши разговор' or prompt == 'закончи разговор' \
+                                    or prompt == 'закончить разговор':
                                 print('разговор завершен!')
                                 speak.rate = speakset
                                 speak.Speak("разговор завершен!")
@@ -209,7 +210,7 @@ if __name__ == '__main__':
                                 message_log.append({"role": "user", "content": user_input})
                                 response = send_message(message_log)
                                 message_log.append({"role": "assistant", "content": response})
-                                print(Fore.GREEN + response[2:] + Style.RESET_ALL)
+                                print(Fore.GREEN + response + Style.RESET_ALL)
                                 trans = translator.translate(response, dest="ru")
                                 print(Fore.LIGHTGREEN_EX + trans.text + Style.RESET_ALL)
                                 if len(response) <= 700:
@@ -225,7 +226,8 @@ if __name__ == '__main__':
                     print('\nразговор без перевода начат!')
                     speak.Speak("разговор начат!")
                     tts.runAndWait()
-                    message_log = []
+                    playrolerus = roleplayrus
+                    message_log = [{"role": "system", "content": playrolerus}]
                     while True:
                         data = stream.read(4000)
                         if rec.AcceptWaveform(data):
@@ -233,7 +235,8 @@ if __name__ == '__main__':
                             prompt = prompt[14:-3]
                             if prompt == 'завершить разговор' or prompt == 'конец разговора' \
                                     or prompt == 'обычный режим' or prompt == 'конец разговор' \
-                                    or prompt == 'заверши разговор':
+                                    or prompt == 'заверши разговор' or prompt == 'закончи разговор' \
+                                    or prompt == 'закончить разговор':
                                 print('разговор завершен!')
                                 speak.rate = speakset
                                 speak.Speak("разговор завершен!")
@@ -241,12 +244,11 @@ if __name__ == '__main__':
                                 break
                             elif prompt != '' and len(prompt) > 7:
                                 print(Fore.LIGHTYELLOW_EX + prompt + Style.RESET_ALL)
-
                                 user_input = prompt
                                 message_log.append({"role": "user", "content": user_input})
                                 response = send_message(message_log)
                                 message_log.append({"role": "assistant", "content": response})
-                                print(Fore.LIGHTGREEN_EX + response[2:] + Style.RESET_ALL)
+                                print(Fore.LIGHTGREEN_EX + response + Style.RESET_ALL)
                                 if len(response) <= 700:
                                     speak.rate = speakset + (speakmax - speakset) * len(response) / 700
                                 elif len(response) > 700:
@@ -334,7 +336,7 @@ if __name__ == '__main__':
                         except FileNotFoundError:
                             print("0", end="")
 
-                    elif words[0] == 'найти':  # если первое слово найти...
+                    elif words[0] == 'найти':
                         prompt = prompt[7:-1]  # убираем первое слово и кавычки из принта
                         try:  # пробуем...
                             pyautogui.hotkey("winleft", "й")  # Открываем окно поиска в пуске
@@ -385,7 +387,7 @@ if __name__ == '__main__':
                             print(f'\n{url}')
                         except FileNotFoundError:
                             print('0', sep='', end='')
-                            
+
                 # режим паузы:
                 elif prompt in ('"заблокировать ассистента"', '"блокировка ассистента"', '"пауза"', '"остановка"',
                                 '"остановись"', '"стоп программа"', '"заблокировать"', '"остановка программы"',
