@@ -26,7 +26,7 @@ https://platform.openai.com/account/api-keys
 
 `openai.api_key = "token"`    (1 строчка в файле `settings.py`) 
 
-`engine='text-davinci-003'`   Менять тип используемой модели можно на (10 строчке) 
+`engine='text-davinci-003'`   Менять тип используемой модели для одиночного запроса можно на (10 строчке) 
 
 номер телефона для OpenAI я брал сдесь - https://onlinesim.io/ru
 
