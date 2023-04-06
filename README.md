@@ -49,6 +49,8 @@ https://platform.openai.com/account/api-keys
 
 https://www.youtube.com/watch?v=NeodPCxl3xs&t=1s&ab_channel=RimtexSE  
 
-Данный код по сути модифицированная версия этого проекта - https://github.com/beetlea/SayChatGPT  
-откуда я нагло позаимствовал и или украл код и доработал/переделал с помощью нейросетей  
+Данный код по сути модифицированная версия этого проекта - https://github.com/beetlea/SayChatGPT   
+
+обновление 1. теперь в разговорах используется модель gpt-3.5-turbo с запоминанием для более адекватного разговора
+пример взял отсюда - https://github.com/kydycode/chatgpt-3.5-turbo
 
