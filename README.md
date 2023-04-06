@@ -28,7 +28,7 @@ https://platform.openai.com/account/api-keys
 
 `engine='text-davinci-003'`   Менять тип используемой модели можно на (43 строчке) 
 
-номер телефона для OpenAI я брал сдесь - `https://onlinesim.io/ru`  
+номер телефона для OpenAI я брал сдесь - https://onlinesim.io/ru
 
 <h2>Необходимые зависимости</h2> 
 
