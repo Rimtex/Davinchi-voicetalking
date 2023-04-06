@@ -24,24 +24,24 @@
 
 токен надо записать в переменные `openai.api_key`
 
-openai.api_key = "token"</br>    (24 строчка в файле davinchi talk.py) 
+`openai.api_key = "token"</br>`    (24 строчка в файле davinchi talk.py) 
 
-engine='text-davinci-003'</br>   Менять тип используемой модели можно на (43 строчке) 
+`engine='text-davinci-003'</br>`   Менять тип используемой модели можно на (43 строчке) 
 
-номер телефона для OpenAI я брал сдесь - https://onlinesim.io/ru  
+номер телефона для OpenAI я брал сдесь - `https://onlinesim.io/ru`  
 
 <h2>Необходимые зависимости</h2> 
 
 Установите необходимые пакеты: `pip install -r requirements.txt`
     
 мне еще пришлось установить   
-pip install --upgrade googletrans==4.0.0-rc1  
+`pip install --upgrade googletrans==4.0.0-rc1`  
 
 для голоса Microsoft Pavel Mobile нужно запустить файлы реестра в папке -  
 need install for pavel voice и поменять его на (33 строчке)  
   
 возможно для голоса нужно будет установить  
-pip install Microsoft Pavel Mobile  
+`pip install Microsoft Pavel Mobile`  
    
 <h2>Принцип работы</h3> 
 
