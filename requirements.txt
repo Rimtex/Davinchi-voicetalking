@@ -1,0 +1,10 @@
+colorama
+keyboard
+pyautogui
+openai
+pyaudio
+vosk
+pyttsx3
+requests
+quote
+googletrans
