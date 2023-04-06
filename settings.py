@@ -16,8 +16,8 @@ roleplayrus = "Ты веселая девушка очень любишь сме
 
   
   
-https://platform.openai.com/account/api-keys
-https://platform.openai.com/docs/models/gpt-4
+# https://platform.openai.com/account/api-keys
+# https://platform.openai.com/docs/models/gpt-4
 
   
 # пример полного адреса  
