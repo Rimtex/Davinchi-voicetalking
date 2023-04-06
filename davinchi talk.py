@@ -14,37 +14,27 @@ from colorama import init, Fore, Style
 from googletrans import Translator
 from urllib.parse import quote
 
+from settings import openaiapikeyset, modelset, adresopenfilesset, \
+    Voiceset, speaksetmin, speaksetmax, speakVolumeset, engineset
+
 translator = Translator()
 init(convert=True)
 tts = pyttsx3.init()
 speak = wincl.Dispatch("SAPI.SpVoice")
 voices = speak.GetVoices()
 
-# https://platform.openai.com/account/api-keys
-openai.api_key = "token"  # обязательно вставьте свой токен !!!
 
-model = Model(r"vosk-model-small-ru-0.22")  # будет ошибка если запускать из консоли. !!
-# для работы из консоли нужен полный путь к модели - как ниже:
-# model = Model(r"F:\myprojects\Davinchi-voicetalking-main\vosk-model-small-ru-0.22")
-
-adresopenfiles = 'C:\\Users\\Public\\Desktop\\'  # адрес папки для команд открытия !   C:\\Users\\Usersname\\Desktop\\
-
+openai.api_key = openaiapikeyset
+model = Model(modelset)
+adresopenfiles = adresopenfilesset
 for voice in voices:
-    if voice.GetAttribute("Name") == "Microsoft Irina Desktop":  # здесь можно поменять голос !
+    if voice.GetAttribute("Name") == Voiceset:
         speak.Voice = voice
         break
-# Microsoft Irina Desktop
-# Microsoft Pavel Mobile   # для него нужно запустить файлы реестра в папке - need install for pavel voice
-
-speakset = 4  # скорость озвучки по-умолчанию
-speakmax = 10  # регулируется пропорционально количеству символов запроса:    0 - 700   =   speakset - speakmax
-speak.Volume = 100  # громкость озвучки
-
-engine = 'text-davinci-003'  # https://platform.openai.com/docs/models/gpt-4
-
-# models = openai.Model.list()
-# for model in models.data: 
-    # print(model.id) # можно вевести список моделей
+speakset = speaksetmin
+speakmax = speaksetmax
+speak.Volume = speakVolumeset
+engine = engineset
 
 rec = KaldiRecognizer(model, 44100)  # частота дискретизации должна быть такой же, как и в системе
 p = pyaudio.PyAudio()
@@ -71,11 +61,11 @@ def generate_gpt3_response(prompt_gpt):
     # Возврат ответа, если количество вариантов больше нуля.
 
 
-def send_message(message_log):
+def send_message(message_loggpt):
     # Отправляем сообщения в OpenAI API и получаем ответ
     responseturbo = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages=message_log,  # журнал сообщений, содержащий сообщения от пользователя и ответы ассистента
+        messages=message_loggpt,  # журнал сообщений, содержащий сообщения от пользователя и ответы ассистента
         max_tokens=3000,  # максимальное количество токенов в ответе
         stop=None,  # последовательность, которая остановит генерацию ответа
         temperature=0.7,  # параметр, определяющий "творческий" уровень генерации ответов
@@ -521,3 +511,4 @@ if __name__ == '__main__':
                     speak.Speak("обычный режим включён!")
                     tts.runAndWait()
                     break
+
