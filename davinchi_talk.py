@@ -360,16 +360,32 @@ if __name__ == '__main__':
                             print("0", end="")
 
                 elif words[0] == 'окей' and words[1] == 'гугл':  # команда для поиска в гугле
-                    prompt = prompt[11:-1]
-                    try:
-                        os.startfile(f'https://www.google.com/search?q={prompt}')
-                        url = "https://www.google.com/search?q=" + quote(prompt)
-                        print(f'\n{url}')
-                        speak.Speak(f"поиск: {prompt} - в гугле")
+                    if prompt == '"окей гугл"':
+                        speak.Speak("что вам найти?")
                         tts.runAndWait()
-                    except FileNotFoundError:
-                        print('0', sep='', end='')
+                        while True:
+                            data = stream.read(4000)
+                            if rec.AcceptWaveform(data):
+                                prompt = rec.Result()
+                                prompt = prompt[14:-3]
+                                if prompt != '':
+                                    os.startfile(f'https://www.google.com/search?q={prompt}')
+                                    url = "https://www.google.com/search?q=" + quote(prompt)
+                                    print(f'\n{url}')
+                                    break
+                                elif prompt == '':
+                                    time.sleep(5)
+                                    break
 
+                    elif prompt != '"окей гугл"':
+                        prompt = prompt[11:-1]
+                        try:
+                            os.startfile(f'https://www.google.com/search?q={prompt}')
+                            url = "https://www.google.com/search?q=" + quote(prompt)
+                            print(f'\n{url}')
+                        except FileNotFoundError:
+                            print('0', sep='', end='')
+                            
                 # режим паузы:
                 elif prompt in ('"заблокировать ассистента"', '"блокировка ассистента"', '"пауза"', '"остановка"',
                                 '"остановись"', '"стоп программа"', '"заблокировать"', '"остановка программы"',
