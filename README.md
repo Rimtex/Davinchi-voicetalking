@@ -24,7 +24,7 @@ https://platform.openai.com/account/api-keys
 
 токен надо записать в переменные `openai.api_key`
 
-`openai.api_key = "token"`    (24 строчка в файле davinchi talk.py) 
+`openai.api_key = "token"`    (24 строчка в файле `davinchi talk.py`) 
 
 `engine='text-davinci-003'`   Менять тип используемой модели можно на (43 строчке) 
 
