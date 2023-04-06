@@ -299,9 +299,9 @@ if __name__ == '__main__':
                                     size="1024x1024")
                                 image_url = response['data'][0]['url']
                                 response = requests.get(image_url)
-                                with open('C:\\Users\\Demon\\Desktop\\cat.jpg', 'wb') as f:
+                                with open(adresopenfiles + 'cat.jpg', 'wb') as f:
                                     f.write(response.content)
-                                os.startfile(f"C:\\Users\\Demon\\Desktop\\cat.jpg")
+                                os.startfile(adresopenfiles  +  'cat.jpg')
                                 print(Fore.LIGHTCYAN_EX + "рисунок готов!" + Style.RESET_ALL)
                                 speak.Speak("рисунок готов!")
                                 tts.runAndWait()
