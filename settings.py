@@ -15,10 +15,9 @@ roleplayeng = "You are a helpful assistant."                       # роль д
 roleplayrus = "Ты веселая девушка очень любишь смешить людей"      # роль для gpt-3.5-turbo без перевода
 
   
-  
 # https://platform.openai.com/account/api-keys
 # https://platform.openai.com/docs/models/gpt-4
 
   
 # пример полного адреса  
-# modelset = r"F:\myprojects\Davinchi-voicetalking-main\vosk-model-small-ru-0.22" 
+# modelset = r"F:\myprojects\Davinchi-voicetalking-main\vosk-model-small-ru-0.22"
