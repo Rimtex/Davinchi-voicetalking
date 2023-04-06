@@ -14,7 +14,7 @@ https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip
 
 https://alphacephei.com/vosk/models/vosk-model-ru-0.42.zip     
 тяжелая распознает заметно лучше, но грузится у меня например почти 4 минуты  
-если используете тяжёлую версию нужно будет поменять адрес на (2 строчка в файле setup.py)  
+если используете тяжёлую версию нужно будет поменять адрес на (2 строчка в файле settings.py)  
 
 для работы из консоли нужно прописать полный путь к модели на (2 строчке) как на (3) 
 
@@ -24,7 +24,7 @@ https://platform.openai.com/account/api-keys
 
 токен надо записать в переменные `openai.api_key`
 
-`openai.api_key = "token"`    (1 строчка в файле `setup.py`) 
+`openai.api_key = "token"`    (1 строчка в файле `settings.py`) 
 
 `engine='text-davinci-003'`   Менять тип используемой модели можно на (10 строчке) 
 
