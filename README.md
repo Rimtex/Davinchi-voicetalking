@@ -5,14 +5,14 @@
 
 <h2>Основные требования</h2>  
 
-https://www.python.org/  
+`https://www.python.org/`  
 
 Скачать языковую модель для распознавания русской речи, закинуть папку туда же где программа.  
 
-https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip          
+`https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip`          
 легкая версия для команд вполне годится 
 
-https://alphacephei.com/vosk/models/vosk-model-ru-0.42.zip   
+`https://alphacephei.com/vosk/models/vosk-model-ru-0.42.zip`   
 тяжелая распознает заметно лучше, но грузится у меня например почти 4 минуты  
 если используете тяжёлую версию нужно будет поменять адрес на (26 строчке)  
 
@@ -20,7 +20,7 @@ https://alphacephei.com/vosk/models/vosk-model-ru-0.42.zip
 
 Обязательно нужно получить token для работы с API   
 
-https://platform.openai.com/account/api-keys 
+`https://platform.openai.com/account/api-keys` 
 
 токен надо записать в переменные openai.api_key 
 
@@ -32,23 +32,8 @@ engine='text-davinci-003'</br>   Менять тип используемой м
 
 <h2>Необходимые зависимости</h2> 
 
-Теперь необходимо установить следующие библиотеки 
-
-pip install colorama   
-pip install keyboard  
-pip install pyautogui   
-pip install openai    
-pip install pyaudio   
-pip install vosk   
-pip install pyttsx3  
-pip install requests  
-pip install quote  
-pip install googletrans   
-
-Эти библиотеки необходимы для для работы программы.      
-win + R > cmd > enter > ctrl + v    
-если вставить все сразу - у вас должно установиться все по порядку, наверное.   
-
+Установите необходимые пакеты: `pip install -r requirements.txt`
+    
 мне еще пришлось установить   
 pip install --upgrade googletrans==4.0.0-rc1  
 
