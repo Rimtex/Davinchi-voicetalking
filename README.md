@@ -14,9 +14,9 @@ https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip
 
 https://alphacephei.com/vosk/models/vosk-model-ru-0.42.zip     
 тяжелая распознает заметно лучше, но грузится у меня например почти 4 минуты  
-если используете тяжёлую версию нужно будет поменять адрес на (26 строчке)  
+если используете тяжёлую версию нужно будет поменять адрес на (2 строчка в файле setup.py)  
 
-для работы из консоли нужно прописать полный путь к модели на (26 строчке) как на (28) 
+для работы из консоли нужно прописать полный путь к модели на (2 строчке) как на (3) 
 
 Обязательно нужно получить token для работы с API   
 
@@ -24,9 +24,9 @@ https://platform.openai.com/account/api-keys
 
 токен надо записать в переменные `openai.api_key`
 
-`openai.api_key = "token"`    (24 строчка в файле `davinchi talk.py`) 
+`openai.api_key = "token"`    (1 строчка в файле `setup.py`) 
 
-`engine='text-davinci-003'`   Менять тип используемой модели можно на (43 строчке) 
+`engine='text-davinci-003'`   Менять тип используемой модели можно на (10 строчке) 
 
 номер телефона для OpenAI я брал сдесь - https://onlinesim.io/ru
 
@@ -38,7 +38,7 @@ https://platform.openai.com/account/api-keys
 `pip install --upgrade googletrans==4.0.0-rc1`  
 
 для голоса Microsoft Pavel Mobile нужно запустить файлы реестра в папке -  
-`need install for pavel voice` и поменять его на (33 строчке)  
+`need install for pavel voice` и поменять его на (6 строчке)  
   
 возможно для голоса нужно будет установить  
 `pip install Microsoft Pavel Mobile`  
@@ -53,4 +53,5 @@ https://www.youtube.com/watch?v=NeodPCxl3xs&t=1s&ab_channel=RimtexSE
 
 обновление 1. теперь в разговорах используется модель gpt-3.5-turbo с запоминанием для более адекватного разговора    
 пример взял отсюда - https://github.com/kydycode/chatgpt-3.5-turbo
+переменные вынесены в отдельный файл для того чтобы не вводить их заного после обновления.
 
