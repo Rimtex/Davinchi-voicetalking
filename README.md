@@ -36,9 +36,6 @@ https://platform.openai.com/account/api-keys
 
 Установите необходимые пакеты: `pip install -r requirements.txt`
 
-мне еще пришлось установить   
-`pip install --upgrade googletrans==4.0.0-rc1`  
-
 для голоса Microsoft Pavel Mobile нужно запустить файлы реестра в папке -  
 `need install for pavel voice` и поменять его на (6 строчке)  
   
