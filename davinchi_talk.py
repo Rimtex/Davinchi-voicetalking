@@ -199,7 +199,7 @@ if __name__ == '__main__':
                             if prompt == 'роль' or prompt == 'сменить роль' or prompt == 'поменять роль' \
                                     or prompt == 'смена роли' or prompt == 'поменяй роль' or prompt == 'смени роль' \
                                     or prompt == 'ролевые игры' or prompt == 'роли' or prompt == 'измени роль' \
-                                    or prompt == 'руль' or prompt == 'смены роли' or prompt == 'смены роли':
+                                    or prompt == 'руль' or prompt == 'смены роли':
                                 input_text = input("Введите новую роль: ")
                                 playroleeng = input_text
                                 message_log.append({"role": "system", "content": f"Роль изменена на {playroleeng}"})
@@ -246,7 +246,7 @@ if __name__ == '__main__':
                             if prompt == 'роль' or prompt == 'сменить роль' or prompt == 'поменять роль' \
                                     or prompt == 'смена роли' or prompt == 'поменяй роль' or prompt == 'смени роль' \
                                     or prompt == 'ролевые игры' or prompt == 'роли' or prompt == 'измени роль' \
-                                    or prompt == 'руль' or prompt == 'смены роли' or prompt == 'смены роли':
+                                    or prompt == 'руль' or prompt == 'смены роли':
                                 input_text = input("Введите новую роль: ")
                                 playroleeng = input_text
                                 message_log.append({"role": "system", "content": f"Роль изменена на {playrolerus}"})
