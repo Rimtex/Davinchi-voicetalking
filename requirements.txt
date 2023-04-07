@@ -8,3 +8,4 @@ pyttsx3
 requests
 quote
 googletrans
+--upgrade googletrans==4.0.0-rc1
