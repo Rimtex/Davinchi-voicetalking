@@ -1,5 +1,4 @@
 import os
-import re
 import time
 import openai
 import random
@@ -36,12 +35,12 @@ speak.Volume = speakVolumeset
 engine = engineset
 discret = discretset
 
-rec = KaldiRecognizer(model, discret)  
+rec = KaldiRecognizer(model, discret)
 p = pyaudio.PyAudio()
 stream = p.open(
     format=pyaudio.paInt16,
     channels=1,
-    rate=discret,  
+    rate=discret,
     input=True,
     frames_per_buffer=4000
 )
@@ -141,8 +140,12 @@ def print_models():
 
 if __name__ == '__main__':
     print("start")
+
     while True:
+
         while True:
+            playrolerus = roleplayrus
+            playroleeng = roleplayeng
             speak.Rate = speakset
             data = stream.read(4000)
             if rec.AcceptWaveform(data):
@@ -186,14 +189,21 @@ if __name__ == '__main__':
                     print('\nразговор начат!')
                     speak.Speak("разговор начат!")
                     tts.runAndWait()
-                    playroleeng = roleplayeng
+
                     message_log = [{"role": "system", "content": playroleeng}]
                     while True:
                         data = stream.read(4000)
                         if rec.AcceptWaveform(data):
                             prompt = rec.Result()
                             prompt = prompt[14:-3]
-                            if prompt == 'завершить разговор' or prompt == 'конец разговора' \
+                            if prompt == 'роль' or prompt == 'сменить роль' or prompt == 'поменять роль' \
+                                    or prompt == 'смена роли' or prompt == 'поменяй роль' or prompt == 'смени роль' \
+                                    or prompt == 'ролевые игры' or prompt == 'роли' or prompt == 'измени роль' \
+                                    or prompt == 'роль' or prompt == 'смены роли' or prompt == 'смена роли':
+                                input_text = input("Введите новую роль: ")
+                                playroleeng = input_text
+                                message_log.append({"role": "system", "content": f"Роль изменена на {playroleeng}"})
+                            elif prompt == 'завершить разговор' or prompt == 'конец разговора' \
                                     or prompt == 'обычный режим' or prompt == 'конец разговор' \
                                     or prompt == 'заверши разговор' or prompt == 'закончи разговор' \
                                     or prompt == 'закончить разговор':
@@ -202,7 +212,7 @@ if __name__ == '__main__':
                                 speak.Speak("разговор завершен!")
                                 tts.runAndWait()
                                 break
-                            elif prompt != '' and len(prompt) > 7:
+                            elif prompt != '' and len(prompt) > 15:
                                 print(Fore.LIGHTYELLOW_EX + prompt + Style.RESET_ALL)
                                 trans = translator.translate(prompt, dest="en")
                                 print(Fore.YELLOW + trans.text + Style.RESET_ALL)
@@ -226,17 +236,27 @@ if __name__ == '__main__':
                     print('\nразговор без перевода начат!')
                     speak.Speak("разговор начат!")
                     tts.runAndWait()
-                    playrolerus = roleplayrus
+
                     message_log = [{"role": "system", "content": playrolerus}]
                     while True:
                         data = stream.read(4000)
                         if rec.AcceptWaveform(data):
                             prompt = rec.Result()
                             prompt = prompt[14:-3]
-                            if prompt == 'завершить разговор' or prompt == 'конец разговора' \
+                            if prompt == 'роль' or prompt == 'сменить роль' or prompt == 'поменять роль' \
+                                    or prompt == 'смена роли' or prompt == 'поменяй роль' or prompt == 'смени роль' \
+                                    or prompt == 'ролевые игры' or prompt == 'роли' or prompt == 'измени роль' \
+                                    or prompt == 'роль' or prompt == 'смены роли' or prompt == 'смена роли':
+                                input_text = input("Введите новую роль: ")
+                                playroleeng = input_text
+                                message_log.append({"role": "system", "content": f"Роль изменена на {playrolerus}"})
+                            elif prompt == 'завершить разговор' or prompt == 'конец разговора' \
                                     or prompt == 'обычный режим' or prompt == 'конец разговор' \
                                     or prompt == 'заверши разговор' or prompt == 'закончи разговор' \
                                     or prompt == 'закончить разговор':
+                                input_text = input("Введите новую роль: ")
+                                playroleeng = input_text
+                                message_log.append({"role": "system", "content": f"Роль изменена на {playrolerus}"})
                                 print('разговор завершен!')
                                 speak.rate = speakset
                                 speak.Speak("разговор завершен!")
