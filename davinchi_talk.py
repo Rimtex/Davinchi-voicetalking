@@ -351,10 +351,13 @@ if __name__ == '__main__':
                                 prompt = rec.Result()
                                 prompt = prompt[14:-3]
                                 if prompt != '':
-                                    os.startfile(f'https://www.google.com/search?q={prompt}')
-                                    url = "https://www.google.com/search?q=" + quote(prompt)
-                                    print(f'\n{url}')
-                                    break
+                                    try:
+                                        os.startfile(f'https://www.google.com/search?q={prompt}')
+                                        url = "https://www.google.com/search?q=" + quote(prompt)
+                                        print(f'\n{url}')
+                                        break
+                                    except OSError:
+                                        print('0', sep='', end='')
                                 elif prompt == '':
                                     time.sleep(5)
                                     break
@@ -365,7 +368,7 @@ if __name__ == '__main__':
                             os.startfile(f'https://www.google.com/search?q={prompt}')
                             url = "https://www.google.com/search?q=" + quote(prompt)
                             print(f'\n{url}')
-                        except FileNotFoundError:
+                        except OSError:
                             print('0', sep='', end='')
 
                 # режим паузы:
