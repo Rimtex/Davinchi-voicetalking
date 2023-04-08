@@ -26,7 +26,7 @@ speak.Volume = 100                   # громкость голоса
 
 #                                    #  r"F:\myprojects\Davinchi-voicetalking-main\vosk-model-small-ru-0.22"
 
-rec = KaldiRecognizer(Model(r"F:\myprojects\Davinchi-voicetalking-main\vosk-model-small-ru-0.22"), 44100)
+rec = KaldiRecognizer(Model(r"vosk-model-small-ru-0.22"), 44100)
 p = pyaudio.PyAudio()
 stream = p.open(
     format=pyaudio.paInt16,
