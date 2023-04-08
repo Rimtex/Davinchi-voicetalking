@@ -14,9 +14,9 @@ https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip
 
 https://alphacephei.com/vosk/models/vosk-model-ru-0.42.zip     
 тяжелая распознает заметно лучше, но грузится у меня например почти 4 минуты  
-если используете тяжёлую версию нужно будет поменять адрес на (2 строчка в файле settings.py)  
+если используете тяжёлую версию нужно будет поменять адрес на (29 строчка в файле settings.py)  
 
-для работы из консоли нужно прописать полный путь к модели на (2 строчке) как на (3) 
+для работы из консоли нужно прописать полный путь к модели на (29 строчке) как на (27) 
 
 Обязательно нужно получить token для работы с API   
 
@@ -24,11 +24,11 @@ https://platform.openai.com/account/api-keys
 
 токен надо записать в переменные `openai.api_key`
 
-`openai.api_key = "token"`    (1 строчка в файле `settings.py`) 
+`openai.api_key = "token"`    (6 строчка в файле `settings.py`) 
 
-`engine='text-davinci-003'`   Менять тип используемой модели для одиночного запроса можно на (10 строчке) 
+`engine='text-davinci-003'`   Менять тип используемой модели для одиночного запроса можно на (43 строчке) 
 
-роли для gpt-3.5-turbo можно менять на (14, 15 строке)
+роли для gpt-3.5-turbo можно менять на (10, 12 строке)
 
 номер телефона для OpenAI я брал сдесь - https://onlinesim.io/ru
 
@@ -37,7 +37,7 @@ https://platform.openai.com/account/api-keys
 Установите необходимые пакеты: `pip install -r requirements.txt`
 
 для голоса Microsoft Pavel Mobile нужно запустить файлы реестра в папке -  
-`need install for pavel voice` и поменять его на (6 строчке)  
+`need install for pavel voice` и поменять его на (17 строчке)  
   
 возможно для голоса нужно будет установить  
 `pip install Microsoft Pavel Mobile`  

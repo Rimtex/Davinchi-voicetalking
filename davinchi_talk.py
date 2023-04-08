@@ -1,85 +1,19 @@
 import os
 import time
-import openai
 import random
-import pyaudio
 import pyttsx3
 import requests
 import keyboard
 import pyautogui
-import win32com.client as wincl
-from vosk import Model, KaldiRecognizer
 from colorama import init, Fore, Style
 from googletrans import Translator
 from urllib.parse import quote
-
-from settings import openaiapikeyset, modelset, adresopenfilesset, \
-    Voiceset, speaksetmin, speaksetmax, speakVolumeset, engineset, discretset, roleplayrus, roleplayeng
+import settings
+from settings import speak, openai, speakset, speakmax, stream, rec, roleplayrus, roleplayeng, adresopenfiles
 
 translator = Translator()
 init(convert=True)
 tts = pyttsx3.init()
-speak = wincl.Dispatch("SAPI.SpVoice")
-voices = speak.GetVoices()
-
-openai.api_key = openaiapikeyset
-model = Model(modelset)
-adresopenfiles = adresopenfilesset
-for voice in voices:
-    if voice.GetAttribute("Name") == Voiceset:
-        speak.Voice = voice
-        break
-speakset = speaksetmin
-speakmax = speaksetmax
-speak.Volume = speakVolumeset
-engine = engineset
-discret = discretset
-
-rec = KaldiRecognizer(model, discret)
-p = pyaudio.PyAudio()
-stream = p.open(
-    format=pyaudio.paInt16,
-    channels=1,
-    rate=discret,
-    input=True,
-    frames_per_buffer=4000
-)
-stream.start_stream()  # https://alphacephei.com/vosk/models
-
-
-def generate_gpt3_response(prompt_gpt):
-    completions = openai.Completion.create(
-        engine=f"{engine}",
-        prompt=prompt_gpt,
-        max_tokens=1024,  # ограничивает максимум токенов, которые могут быть использованы для завершения промпта
-        n=1,  # указывает, что OpenAI должен возвратить только одно предложение для завершения предложения
-        stop=None,  # модель не прекратит генерацию текста после достижения максимального количества токенов
-        temperature=0.5,  # 0.1 - 1
-    )
-    return completions["choices"][0]["text"] if len(completions["choices"]) > 0 else None
-    # Возврат ответа, если количество вариантов больше нуля.
-
-
-def send_message(message_loggpt):
-    # Отправляем сообщения в OpenAI API и получаем ответ
-    responseturbo = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=message_loggpt,  # журнал сообщений, содержащий сообщения от пользователя и ответы ассистента
-        max_tokens=2000,  # максимальное количество токенов в ответе
-        stop=None,  # последовательность, которая остановит генерацию ответа
-        temperature=0.7,  # параметр, определяющий "творческий" уровень генерации ответов
-    )
-
-    # Перебираем все варианты ответов из объекта response
-    for choice in responseturbo.choices:
-        # Если в текущем варианте есть поле "text"
-        if "text" in choice:
-            # Возвращаем текст этого варианта
-            return choice.text
-
-    # Если ни один вариант не содержит поля "text", то возвращаем текст первого сообщения
-    return responseturbo.choices[0].message.content
-
 
 colors = [Fore.RED, Fore.GREEN, Fore.BLUE, Fore.YELLOW, Fore.MAGENTA, Fore.CYAN,
           Fore.LIGHTRED_EX, Fore.LIGHTGREEN_EX, Fore.LIGHTBLUE_EX,
@@ -138,6 +72,8 @@ def print_models():
         print(modelka.id)
 
 
+buffer = b''  # создаем буфер для сохранения записанного аудио
+
 if __name__ == '__main__':
     print("start")
 
@@ -163,15 +99,24 @@ if __name__ == '__main__':
                     speak.Speak("Че надо кожаный мешок с костями!?")
                     tts.runAndWait()
                     while True:
-                        data = stream.read(4000)
+                        data = stream.read(4000, exception_on_overflow=False)
+                        if len(data) == 0:
+                            break
+                        if keyboard.is_pressed('ctrl'):
+                            buffer += data  # добавляем записанные данные в буфер
+                            continue  # продолжаем запись, даже если вы прервали свою речь
+                        if len(buffer) > 0:
+                            if rec.AcceptWaveform(buffer):
+                                prompt = rec.Result()
+                            buffer = b''  # очищаем буфер
                         if rec.AcceptWaveform(data):
                             prompt = rec.Result()
                             prompt = prompt[14:-3]
-                            if prompt != '' and len(prompt) > 7:
+                            if prompt != '':
                                 print(Fore.LIGHTYELLOW_EX + prompt + Style.RESET_ALL)
                                 trans = translator.translate(prompt, dest="en")
                                 print(Fore.YELLOW + trans.text + Style.RESET_ALL)
-                                response = generate_gpt3_response(trans.text)
+                                response = settings.generate_gpt3_response(trans.text)
                                 print(Fore.GREEN + response[2:])
                                 trans = translator.translate(response, dest="ru")
                                 print(Fore.LIGHTGREEN_EX + trans.text + Style.RESET_ALL)
@@ -181,7 +126,7 @@ if __name__ == '__main__':
                                     speak.Rate = speakmax
                                 speak.Speak(trans.text)
                                 tts.runAndWait()
-                                break
+                                break  # прервать запись, когда голосовой ввод заканчивается
 
                 # Многоразовый вызов:
                 elif any(word in prompt for word in
@@ -192,7 +137,16 @@ if __name__ == '__main__':
 
                     message_log = [{"role": "system", "content": playroleeng}]
                     while True:
-                        data = stream.read(4000)
+                        data = stream.read(4000, exception_on_overflow=False)
+                        if len(data) == 0:
+                            break
+                        if keyboard.is_pressed('ctrl'):
+                            buffer += data  # добавляем записанные данные в буфер
+                            continue  # продолжаем запись, даже если вы прервали свою речь
+                        if len(buffer) > 0:
+                            if rec.AcceptWaveform(buffer):
+                                prompt = rec.Result()
+                            buffer = b''  # очищаем буфер
                         if rec.AcceptWaveform(data):
                             prompt = rec.Result()
                             prompt = prompt[14:-3]
@@ -212,13 +166,13 @@ if __name__ == '__main__':
                                 speak.Speak("разговор завершен!")
                                 tts.runAndWait()
                                 break
-                            elif prompt != '' and len(prompt) > 15:
+                            elif prompt != '':
                                 print(Fore.LIGHTYELLOW_EX + prompt + Style.RESET_ALL)
                                 trans = translator.translate(prompt, dest="en")
                                 print(Fore.YELLOW + trans.text + Style.RESET_ALL)
                                 user_input = trans.text
                                 message_log.append({"role": "user", "content": user_input})
-                                response = send_message(message_log)
+                                response = settings.send_message(message_log)
                                 message_log.append({"role": "assistant", "content": response})
                                 print(Fore.GREEN + response + Style.RESET_ALL)
                                 trans = translator.translate(response, dest="ru")
@@ -239,7 +193,16 @@ if __name__ == '__main__':
 
                     message_log = [{"role": "system", "content": playrolerus}]
                     while True:
-                        data = stream.read(4000)
+                        data = stream.read(4000, exception_on_overflow=False)
+                        if len(data) == 0:
+                            break
+                        if keyboard.is_pressed('ctrl'):
+                            buffer += data  # добавляем записанные данные в буфер
+                            continue  # продолжаем запись, даже если вы прервали свою речь
+                        if len(buffer) > 0:
+                            if rec.AcceptWaveform(buffer):
+                                prompt = rec.Result()
+                            buffer = b''  # очищаем буфер
                         if rec.AcceptWaveform(data):
                             prompt = rec.Result()
                             prompt = prompt[14:-3]
@@ -254,19 +217,16 @@ if __name__ == '__main__':
                                     or prompt == 'обычный режим' or prompt == 'конец разговор' \
                                     or prompt == 'заверши разговор' or prompt == 'закончи разговор' \
                                     or prompt == 'закончить разговор':
-                                input_text = input("Введите новую роль: ")
-                                playroleeng = input_text
-                                message_log.append({"role": "system", "content": f"Роль изменена на {playrolerus}"})
                                 print('разговор завершен!')
                                 speak.rate = speakset
                                 speak.Speak("разговор завершен!")
                                 tts.runAndWait()
                                 break
-                            elif prompt != '' and len(prompt) > 7:
+                            elif prompt != '':
                                 print(Fore.LIGHTYELLOW_EX + prompt + Style.RESET_ALL)
                                 user_input = prompt
                                 message_log.append({"role": "user", "content": user_input})
-                                response = send_message(message_log)
+                                response = settings.send_message(message_log)
                                 message_log.append({"role": "assistant", "content": response})
                                 print(Fore.LIGHTGREEN_EX + response + Style.RESET_ALL)
                                 if len(response) <= 700:
