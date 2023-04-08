@@ -7,6 +7,8 @@ import keyboard
 import pyautogui
 from colorama import init, Fore, Style
 from googletrans import Translator
+import webbrowser
+import urllib.parse
 from urllib.parse import quote
 import settings
 from settings import speak, openai, speakset, speakmax, stream, rec, roleplayrus, roleplayeng, adresopenfiles
@@ -352,7 +354,8 @@ if __name__ == '__main__':
                                 prompt = prompt[14:-3]
                                 if prompt != '':
                                     try:
-                                        os.startfile(f'https://www.google.com/search?q={prompt}')
+                                        search_url = f'https://www.google.com/search?q={urllib.parse.quote(prompt)}'
+                                        webbrowser.open(search_url)
                                         url = "https://www.google.com/search?q=" + quote(prompt)
                                         print(f'\n{url}')
                                         break
@@ -365,7 +368,8 @@ if __name__ == '__main__':
                     elif prompt != '"окей гугл"':
                         prompt = prompt[11:-1]
                         try:
-                            os.startfile(f'https://www.google.com/search?q={prompt}')
+                            search_url = f'https://www.google.com/search?q={urllib.parse.quote(prompt)}'
+                            webbrowser.open(search_url)
                             url = "https://www.google.com/search?q=" + quote(prompt)
                             print(f'\n{url}')
                         except OSError:
