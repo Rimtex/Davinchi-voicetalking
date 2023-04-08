@@ -415,26 +415,26 @@ if __name__ == '__main__':
 
                 # управление голосом:
                 elif prompt == '"альт"' or prompt == '"аль"':
-                    keyboard.press("Altleft")
+                    keyboard.press_and_release("Altleft")
                 elif prompt == '"пробел"':
-                    keyboard.press("Space")
+                    keyboard.press_and_release("Space")
                 elif prompt == '"бек спэйс"' or prompt == '"стереть"' or prompt == '"стирание"':
-                    keyboard.press("backspace")
+                    keyboard.press_and_release("backspace")
                 elif prompt in ('"энтер"', '"эндер"', '"интер"', '"нтр"', '"строка"', '"строчка"', '"введите"'):
-                    keyboard.press("enter")
+                    keyboard.press_and_release("enter")
                 elif prompt in ('"эскейп"', '"выход"', '"выйти"'):
-                    keyboard.press("Escape")
+                    keyboard.press_and_release("Escape")
                 elif prompt in ('"контрол"', '"контур"', '"контр"'):
-                    keyboard.press("Control")
+                    keyboard.press_and_release("Control")
                 elif prompt in ('"делит"', '"удали"', '"удалить"', '"удаления"', '"удали"', '"удаление"'):
-                    keyboard.press("delete")
+                    keyboard.press_and_release("delete")
                 elif prompt in ('"таб"', '"та бы"', '"тоб"', '"смена"', '"сменить"', '"поменять"'):
-                    keyboard.press("tab")
+                    keyboard.press_and_release("tab")
 
                 elif prompt == '"фиксация"' or prompt == '"цифры"' or prompt == '"цифра"' or prompt == '"циферки"':
-                    keyboard.press("numlock")
+                    keyboard.press_and_release("numlock")
                 elif prompt in ('"капс лок"', '"большими буквами"', '"капс лак"', '"сменить регистр"', '"регистр"'):
-                    keyboard.press("Caps Lock")
+                    keyboard.press_and_release("Caps Lock")
                 elif prompt in ('"альт четыре"', '"закрыть окно"', '"закрой окно"', '"альт эф четыре"'):
                     pyautogui.hotkey('altleft', 'F4')
                 elif prompt in ('"шифт альт"', '"раскладка"', '"сменить язык"', '"поменять язык"', '"смена языка"'):
@@ -443,13 +443,13 @@ if __name__ == '__main__':
                     pyautogui.hotkey('altleft', 'shiftleft')
 
                 elif prompt in ('"лево"', '"влево"', '"лева"', '"в лево"', '"налево"'):
-                    keyboard.press('left')
+                    keyboard.press_and_release('left')
                 elif prompt in ('"право"', '"вправо"', '"права"', '"в право"', '"направо"'):
-                    keyboard.press("right")
+                    keyboard.press_and_release("right")
                 elif prompt in ('"верх"', '"вверх"', '"в верх"', '"в вверх"', '"наверх"'):
-                    keyboard.press("up")
+                    keyboard.press_and_release("up")
                 elif prompt in ('"низ"', '"вниз"', '"в вниз"', '"в ввниз"', '"на вниз"'):
-                    keyboard.press("down")
+                    keyboard.press_and_release("down")
 
                 elif prompt in ('"закрыть вкладку"', '"крестик"', '"минус вкладка"', '"закрой вкладку"'):
                     pyautogui.hotkey('ctrlleft', 'w')
