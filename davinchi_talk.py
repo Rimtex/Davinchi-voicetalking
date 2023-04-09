@@ -177,16 +177,20 @@ if __name__ == '__main__':
                                     response = settings.send_message(message_log)
                                     message_log.append({"role": "assistant", "content": response})
                                     print(Fore.GREEN + response + Style.RESET_ALL)
-                                    trans = translator.translate(response, dest="ru")
-                                    print(Fore.LIGHTGREEN_EX + trans.text + Style.RESET_ALL)
-                                    if len(response) <= 700:
-                                        speak.rate = speakset + (speakmax - speakset) * len(response) / 700
-                                    elif len(response) > 700:
-                                        speak.Rate = speakmax
-                                    speak.Speak(trans.text)
-                                    tts.runAndWait()
+                                    try:
+                                        trans = translator.translate(response, dest="ru")
+                                        print(Fore.LIGHTGREEN_EX + trans.text + Style.RESET_ALL)
+                                        if len(response) <= 700:
+                                            speak.rate = speakset + (speakmax - speakset) * len(response) / 700
+                                        elif len(response) > 700:
+                                            speak.Rate = speakmax
+                                        speak.Speak(trans.text)
+                                        tts.runAndWait()
+                                    except Exception as e:
+                                        print("Ошибка: переводчика", e)
                                 except openai.error.InvalidRequestError as e:
                                     print("Ошибка: токены перепоолнены", e)
+
 
                 # Многоразовый вызов без перевода:
                 elif any(word in prompt for word in
