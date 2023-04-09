@@ -102,8 +102,6 @@ if __name__ == '__main__':
                     tts.runAndWait()
                     while True:
                         data = stream.read(4000, exception_on_overflow=False)
-                        if len(data) == 0:
-                            break
                         if keyboard.is_pressed('ctrl'):
                             buffer += data  # добавляем записанные данные в буфер
                             continue  # продолжаем запись, даже если вы прервали свою речь
@@ -139,7 +137,6 @@ if __name__ == '__main__':
                     message_log = [{"role": "system", "content": playroleeng}]
                     while True:
                         data = stream.read(4000, exception_on_overflow=False)
-
                         if keyboard.is_pressed('ctrl'):
                             buffer += data  # добавляем записанные данные в буфер
                             continue  # продолжаем запись, даже если вы прервали свою речь
@@ -199,7 +196,6 @@ if __name__ == '__main__':
                     print('\nразговор без перевода начат!')
                     speak.Speak("разговор начат!")
                     tts.runAndWait()
-
                     message_log = [{"role": "system", "content": playrolerus}]
                     while True:
                         data = stream.read(4000, exception_on_overflow=False)
