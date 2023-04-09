@@ -139,8 +139,7 @@ if __name__ == '__main__':
                     message_log = [{"role": "system", "content": playroleeng}]
                     while True:
                         data = stream.read(4000, exception_on_overflow=False)
-                        if len(data) == 0:
-                            break
+
                         if keyboard.is_pressed('ctrl'):
                             buffer += data  # добавляем записанные данные в буфер
                             continue  # продолжаем запись, даже если вы прервали свою речь
@@ -157,7 +156,7 @@ if __name__ == '__main__':
                                     or prompt == 'руль' or prompt == 'смены роли':
                                 input_text = input("Введите новую роль: ")
                                 playroleeng = input_text
-                                message_log.append({"role": "system", "content": f"Роль изменена на {playroleeng}"})
+                                message_log[-1]["content"] = f"{playroleeng}"
                             elif prompt == 'завершить разговор' or prompt == 'конец разговора' \
                                     or prompt == 'обычный режим' or prompt == 'конец разговор' \
                                     or prompt == 'заверши разговор' or prompt == 'закончи разговор' \
@@ -169,10 +168,13 @@ if __name__ == '__main__':
                                 break
                             elif prompt != '':
                                 print(Fore.LIGHTYELLOW_EX + prompt + Style.RESET_ALL)
-                                trans = translator.translate(prompt, dest="en")
-                                print(Fore.YELLOW + trans.text + Style.RESET_ALL)
-                                user_input = trans.text
-                                message_log.append({"role": "user", "content": user_input})
+                                try:
+                                    trans = translator.translate(prompt, dest="en")
+                                    print(Fore.YELLOW + trans.text + Style.RESET_ALL)
+                                    user_input = trans.text
+                                    message_log.append({"role": "user", "content": user_input})
+                                except Exception as e:
+                                    print("Ошибка: переводчика", e)
                                 try:
                                     response = settings.send_message(message_log)
                                     message_log.append({"role": "assistant", "content": response})
@@ -187,10 +189,9 @@ if __name__ == '__main__':
                                         speak.Speak(trans.text)
                                         tts.runAndWait()
                                     except Exception as e:
-                                        print("Ошибка: переводчика", e)
-                                except openai.error.InvalidRequestError as e:
-                                    print("Ошибка: токены перепоолнены", e)
-
+                                        print("Ошибка: переводчика 2", e)
+                                except Exception as e:
+                                    print("Ошибка: токены перепоолнены\n", e)
 
                 # Многоразовый вызов без перевода:
                 elif any(word in prompt for word in
@@ -202,8 +203,6 @@ if __name__ == '__main__':
                     message_log = [{"role": "system", "content": playrolerus}]
                     while True:
                         data = stream.read(4000, exception_on_overflow=False)
-                        if len(data) == 0:
-                            break
                         if keyboard.is_pressed('ctrl'):
                             buffer += data  # добавляем записанные данные в буфер
                             continue  # продолжаем запись, даже если вы прервали свою речь
@@ -219,8 +218,8 @@ if __name__ == '__main__':
                                     or prompt == 'ролевые игры' or prompt == 'роли' or prompt == 'измени роль' \
                                     or prompt == 'руль' or prompt == 'смены роли':
                                 input_text = input("Введите новую роль: ")
-                                playroleeng = input_text
-                                message_log.append({"role": "system", "content": f"Роль изменена на {playrolerus}"})
+                                playrolerus = input_text
+                                message_log[-1]["content"] = f"{playrolerus}"
                             elif prompt == 'завершить разговор' or prompt == 'конец разговора' \
                                     or prompt == 'обычный режим' or prompt == 'конец разговор' \
                                     or prompt == 'заверши разговор' or prompt == 'закончи разговор' \
@@ -244,7 +243,7 @@ if __name__ == '__main__':
                                         speak.Rate = speakmax
                                     speak.Speak(response)
                                     tts.runAndWait()
-                                except openai.error.InvalidRequestError as e:
+                                except Exception as e:
                                     print("Ошибка: токены перепоолнены", e)
 
                 # Запись в курсор:
